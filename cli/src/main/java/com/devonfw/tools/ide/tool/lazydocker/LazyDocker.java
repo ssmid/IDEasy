@@ -12,7 +12,6 @@ import com.devonfw.tools.ide.process.ProcessMode;
 import com.devonfw.tools.ide.process.ProcessResult;
 import com.devonfw.tools.ide.tool.LocalToolCommandlet;
 import com.devonfw.tools.ide.tool.ToolCommandlet;
-import com.devonfw.tools.ide.tool.docker.Docker;
 import com.devonfw.tools.ide.version.VersionIdentifier;
 
 /**
@@ -34,10 +33,7 @@ public class LazyDocker extends LocalToolCommandlet {
   }
 
   @Override
-  protected void installDependencies() {
-
-    // TODO create lazydocker/lazydocker/dependencies.json file in ide-urls and delete this method
-    getCommandlet(Docker.class).install();
+  protected void postInstall() {
     // verify docker API version requirements
     ProcessContext pc = this.context.newProcess().errorHandling(ProcessErrorHandling.NONE).executable("docker").addArg("version").addArg("--format")
         .addArg("'{{.Client.APIVersion}}'");
